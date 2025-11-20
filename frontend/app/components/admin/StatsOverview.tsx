@@ -14,37 +14,40 @@ export default function StatsOverview() {
       color: 'from-blue-500 to-cyan-500',
     },
     {
-      label: 'Active Users',
-      value: '856',
-      change: '+8.2%',
+      label: 'Immutable Records',
+      value: '8,456',
+      change: '+18.3%',
       trend: 'up',
-      icon: '👥',
-      color: 'from-purple-500 to-pink-500',
+      icon: '🔒',
+      color: 'from-green-500 to-emerald-500',
+      description: 'Blockchain-secured records',
     },
     {
-      label: 'Total Transactions',
-      value: '3,421',
+      label: 'Ecosystem Partners',
+      value: '127',
+      change: '+5.2%',
+      trend: 'up',
+      icon: '🤝',
+      color: 'from-purple-500 to-pink-500',
+      description: 'Dealerships, workshops, insurers',
+    },
+    {
+      label: 'Ownership Transfers',
+      value: '342',
       change: '+15.7%',
       trend: 'up',
-      icon: '💳',
-      color: 'from-green-500 to-emerald-500',
-    },
-    {
-      label: 'Revenue (ETH)',
-      value: '12.45',
-      change: '+22.1%',
-      trend: 'up',
-      icon: '💰',
+      icon: '🔄',
       color: 'from-orange-500 to-red-500',
+      description: 'Digital transfers completed',
     },
   ]
 
   const recentActivity = [
-    { id: 1, action: 'New vehicle registered', vehicle: 'BMW X5 2023', time: '2 mins ago', status: 'success' },
-    { id: 2, action: 'Service record added', vehicle: 'Tesla Model 3', time: '15 mins ago', status: 'success' },
-    { id: 3, action: 'Ownership transferred', vehicle: 'Mercedes C-Class', time: '1 hour ago', status: 'success' },
-    { id: 4, action: 'Verification pending', vehicle: 'Audi A4 2022', time: '2 hours ago', status: 'pending' },
-    { id: 5, action: 'Failed verification', vehicle: 'Toyota Camry', time: '3 hours ago', status: 'error' },
+    { id: 1, action: 'New vehicle registered', vehicle: 'BMW X5 2023', time: '2 mins ago', status: 'success', feature: 'Immutable Records' },
+    { id: 2, action: 'Service record added (Workshop)', vehicle: 'Tesla Model 3', time: '15 mins ago', status: 'success', feature: 'Ecosystem Integration' },
+    { id: 3, action: 'Ownership transferred', vehicle: 'Mercedes C-Class', time: '1 hour ago', status: 'success', feature: 'Digital Ownership Transfer' },
+    { id: 4, action: 'QR code scanned for verification', vehicle: 'Audi A4 2022', time: '2 hours ago', status: 'success', feature: 'Instant Verification' },
+    { id: 5, action: 'Maintenance record added (Dealership)', vehicle: 'Toyota Camry', time: '3 hours ago', status: 'success', feature: 'Ecosystem Integration' },
   ]
 
   return (
@@ -69,6 +72,9 @@ export default function StatsOverview() {
             <div>
               <p className="text-gray-400 text-sm mb-1">{stat.label}</p>
               <p className="text-3xl font-bold text-white">{stat.value}</p>
+              {stat.description && (
+                <p className="text-xs text-gray-500 mt-1">{stat.description}</p>
+              )}
             </div>
           </div>
         ))}
@@ -89,12 +95,16 @@ export default function StatsOverview() {
               <span>Verify Pending Records</span>
             </button>
             <button className="w-full px-4 py-3 bg-gray-700/50 text-white rounded-lg font-semibold hover:bg-gray-700 transition-all duration-200 text-left flex items-center space-x-3">
-              <span className="text-xl">📧</span>
-              <span>Send Notifications</span>
+              <span className="text-xl">🔍</span>
+              <span>Instant VIN/QR Verification</span>
             </button>
             <button className="w-full px-4 py-3 bg-gray-700/50 text-white rounded-lg font-semibold hover:bg-gray-700 transition-all duration-200 text-left flex items-center space-x-3">
-              <span className="text-xl">📊</span>
-              <span>Generate Report</span>
+              <span className="text-xl">🔄</span>
+              <span>Process Ownership Transfer</span>
+            </button>
+            <button className="w-full px-4 py-3 bg-gray-700/50 text-white rounded-lg font-semibold hover:bg-gray-700 transition-all duration-200 text-left flex items-center space-x-3">
+              <span className="text-xl">🤝</span>
+              <span>Manage Ecosystem Partners</span>
             </button>
           </div>
         </div>
@@ -112,10 +122,48 @@ export default function StatsOverview() {
                 <div className="flex-1">
                   <p className="text-white font-medium text-sm">{activity.action}</p>
                   <p className="text-gray-400 text-xs">{activity.vehicle}</p>
-                  <p className="text-gray-500 text-xs mt-1">{activity.time}</p>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <p className="text-gray-500 text-xs">{activity.time}</p>
+                    {activity.feature && (
+                      <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-xs rounded-full border border-blue-500/30">
+                        {activity.feature}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CarSafe Key Features */}
+      <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700">
+        <h3 className="text-xl font-bold text-white mb-6">CarSafe Key Features</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-lg p-4">
+            <div className="text-2xl mb-2">🔒</div>
+            <h4 className="text-white font-semibold mb-1">Immutable Records</h4>
+            <p className="text-gray-400 text-xs mb-2">Service and repair data logged via blockchain and secured by Smart Contracts.</p>
+            <p className="text-green-400 text-xs font-semibold">Fraud Prevention: Guarantees records cannot be altered or deleted.</p>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-lg p-4">
+            <div className="text-2xl mb-2">🤝</div>
+            <h4 className="text-white font-semibold mb-1">Ecosystem Integration</h4>
+            <p className="text-gray-400 text-xs mb-2">Dealerships, certified workshops, and insurance providers contribute data.</p>
+            <p className="text-blue-400 text-xs font-semibold">Complete History: Single source of truth.</p>
+          </div>
+          <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-lg p-4">
+            <div className="text-2xl mb-2">⚡</div>
+            <h4 className="text-white font-semibold mb-1">Instant Verification</h4>
+            <p className="text-gray-400 text-xs mb-2">Scan a CarSafe code (QR or VIN) to instantly access full history.</p>
+            <p className="text-purple-400 text-xs font-semibold">Time & Trust: Instant peace of mind.</p>
+          </div>
+          <div className="bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/30 rounded-lg p-4">
+            <div className="text-2xl mb-2">🔄</div>
+            <h4 className="text-white font-semibold mb-1">Digital Ownership Transfer</h4>
+            <p className="text-gray-400 text-xs mb-2">Securely transfer vehicle ownership rights on the blockchain.</p>
+            <p className="text-orange-400 text-xs font-semibold">Simplified Transactions: Verified proof of ownership.</p>
           </div>
         </div>
       </div>
@@ -138,7 +186,7 @@ export default function StatsOverview() {
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
             <div>
-              <p className="text-white font-semibold">API Status</p>
+              <p className="text-white font-semibold">Smart Contracts</p>
               <p className="text-green-400 text-sm">Operational</p>
             </div>
           </div>
@@ -147,8 +195,8 @@ export default function StatsOverview() {
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             </div>
             <div>
-              <p className="text-white font-semibold">Database</p>
-              <p className="text-green-400 text-sm">Online</p>
+              <p className="text-white font-semibold">Ecosystem Partners</p>
+              <p className="text-green-400 text-sm">127 Active</p>
             </div>
           </div>
         </div>

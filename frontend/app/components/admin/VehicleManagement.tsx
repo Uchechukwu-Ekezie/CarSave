@@ -11,6 +11,10 @@ interface Vehicle {
   owner: string
   status: 'verified' | 'pending' | 'flagged'
   lastUpdated: string
+  recordsCount?: number
+  ecosystemPartners?: string[]
+  qrCodeGenerated?: boolean
+  ownershipTransfers?: number
 }
 
 export default function VehicleManagement() {
@@ -28,6 +32,10 @@ export default function VehicleManagement() {
       owner: '0x742d...beb',
       status: 'verified',
       lastUpdated: '2024-01-15',
+      recordsCount: 12,
+      ecosystemPartners: ['Dealership', 'Workshop'],
+      qrCodeGenerated: true,
+      ownershipTransfers: 1,
     },
     {
       id: '2',
@@ -38,6 +46,10 @@ export default function VehicleManagement() {
       owner: '0x8a92...c3f',
       status: 'verified',
       lastUpdated: '2024-01-14',
+      recordsCount: 8,
+      ecosystemPartners: ['Dealership', 'Insurance'],
+      qrCodeGenerated: true,
+      ownershipTransfers: 2,
     },
     {
       id: '3',
@@ -48,6 +60,10 @@ export default function VehicleManagement() {
       owner: '0x3f4a...d21',
       status: 'pending',
       lastUpdated: '2024-01-13',
+      recordsCount: 3,
+      ecosystemPartners: ['Workshop'],
+      qrCodeGenerated: false,
+      ownershipTransfers: 0,
     },
     {
       id: '4',
@@ -58,6 +74,10 @@ export default function VehicleManagement() {
       owner: '0x9b5c...e45',
       status: 'flagged',
       lastUpdated: '2024-01-12',
+      recordsCount: 5,
+      ecosystemPartners: [],
+      qrCodeGenerated: true,
+      ownershipTransfers: 1,
     },
     {
       id: '5',
@@ -68,6 +88,10 @@ export default function VehicleManagement() {
       owner: '0x1d7f...a89',
       status: 'verified',
       lastUpdated: '2024-01-11',
+      recordsCount: 15,
+      ecosystemPartners: ['Dealership', 'Workshop', 'Insurance'],
+      qrCodeGenerated: true,
+      ownershipTransfers: 3,
     },
   ]
 
@@ -122,6 +146,9 @@ export default function VehicleManagement() {
             </select>
             <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-200 whitespace-nowrap">
               + Add Vehicle
+            </button>
+            <button className="px-4 py-3 bg-green-600/20 text-green-400 border border-green-500/50 rounded-lg font-semibold hover:bg-green-600/30 transition-all duration-200 whitespace-nowrap">
+              🔍 Verify VIN/QR
             </button>
           </div>
         </div>
@@ -178,6 +205,12 @@ export default function VehicleManagement() {
                   Last Updated
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  Records
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  Partners
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -208,12 +241,44 @@ export default function VehicleManagement() {
                     <span className="text-sm text-gray-400">{vehicle.lastUpdated}</span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex space-x-2">
-                      <button className="px-3 py-1 bg-blue-600/20 text-blue-400 rounded hover:bg-blue-600/30 transition-colors text-xs font-semibold">
-                        View
-                      </button>
-                      <button className="px-3 py-1 bg-purple-600/20 text-purple-400 rounded hover:bg-purple-600/30 transition-colors text-xs font-semibold">
-                        Edit
+                    <div className="flex flex-col space-y-1">
+                      <span className="text-sm font-semibold text-white">{vehicle.recordsCount || 0}</span>
+                      <span className="text-xs text-gray-500">Immutable</span>
+                      {vehicle.qrCodeGenerated && (
+                        <span className="text-xs text-green-400">✓ QR Ready</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-col space-y-1">
+                      {vehicle.ecosystemPartners && vehicle.ecosystemPartners.length > 0 ? (
+                        <>
+                          {vehicle.ecosystemPartners.slice(0, 2).map((partner, idx) => (
+                            <span key={idx} className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded border border-blue-500/30">
+                              {partner}
+                            </span>
+                          ))}
+                          {vehicle.ecosystemPartners.length > 2 && (
+                            <span className="text-xs text-gray-500">+{vehicle.ecosystemPartners.length - 2} more</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-xs text-gray-500">None</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex flex-col space-y-1">
+                      <div className="flex space-x-1">
+                        <button className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded hover:bg-blue-600/30 transition-colors text-xs font-semibold">
+                          View
+                        </button>
+                        <button className="px-2 py-1 bg-purple-600/20 text-purple-400 rounded hover:bg-purple-600/30 transition-colors text-xs font-semibold">
+                          Edit
+                        </button>
+                      </div>
+                      <button className="px-2 py-1 bg-green-600/20 text-green-400 rounded hover:bg-green-600/30 transition-colors text-xs font-semibold w-full">
+                        Transfer
                       </button>
                     </div>
                   </td>

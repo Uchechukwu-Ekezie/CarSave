@@ -10,6 +10,7 @@ interface Activity {
   timestamp: string
   status: 'success' | 'failed' | 'pending'
   txHash?: string
+  feature?: 'Immutable Records' | 'Ecosystem Integration' | 'Instant Verification' | 'Digital Ownership Transfer'
 }
 
 export default function UserActivity() {
@@ -25,15 +26,17 @@ export default function UserActivity() {
       timestamp: '2024-01-15 14:32:15',
       status: 'success',
       txHash: '0x1234...5678',
+      feature: 'Immutable Records',
     },
     {
       id: '2',
       user: '0x8a92f1e3...c3f',
-      action: 'Service Record Added',
+      action: 'Service Record Added (Workshop)',
       target: 'Tesla Model 3',
       timestamp: '2024-01-15 14:15:42',
       status: 'success',
       txHash: '0x9876...4321',
+      feature: 'Ecosystem Integration',
     },
     {
       id: '3',
@@ -42,49 +45,55 @@ export default function UserActivity() {
       target: 'Mercedes C-Class',
       timestamp: '2024-01-15 13:45:21',
       status: 'pending',
+      feature: 'Digital Ownership Transfer',
     },
     {
       id: '4',
       user: '0x9b5ce45a...e45',
-      action: 'Verification Request',
+      action: 'QR Code Verification',
       target: 'Audi A4 2022',
       timestamp: '2024-01-15 12:30:18',
-      status: 'failed',
+      status: 'success',
+      feature: 'Instant Verification',
     },
     {
       id: '5',
       user: '0x1d7fa89c...a89',
-      action: 'Document Upload',
+      action: 'Maintenance Record (Dealership)',
       target: 'Toyota Camry',
       timestamp: '2024-01-15 11:20:45',
       status: 'success',
       txHash: '0xabcd...efgh',
+      feature: 'Ecosystem Integration',
     },
     {
       id: '6',
       user: '0x5e8b2c4d...f12',
-      action: 'Profile Update',
-      target: 'User Profile',
+      action: 'VIN Scan Verification',
+      target: 'Honda Accord 2021',
       timestamp: '2024-01-15 10:15:33',
       status: 'success',
+      feature: 'Instant Verification',
     },
     {
       id: '7',
       user: '0x742d35cc...beb',
-      action: 'Accident Report',
+      action: 'Accident Report Logged',
       target: 'Honda Civic 2020',
       timestamp: '2024-01-15 09:45:12',
       status: 'success',
       txHash: '0xdef1...2345',
+      feature: 'Immutable Records',
     },
     {
       id: '8',
       user: '0x2c9d4f5e...g34',
-      action: 'Maintenance Log',
+      action: 'Ownership Transfer Completed',
       target: 'Ford F-150',
       timestamp: '2024-01-15 08:30:25',
       status: 'success',
       txHash: '0x5678...9abc',
+      feature: 'Digital Ownership Transfer',
     },
   ]
 
@@ -218,6 +227,9 @@ export default function UserActivity() {
                   Timestamp
                 </th>
                 <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  Feature
+                </th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">
                   Transaction
                 </th>
               </tr>
@@ -241,6 +253,20 @@ export default function UserActivity() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="text-sm text-gray-400">{activity.timestamp}</span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {activity.feature ? (
+                      <span className={`px-2 py-1 text-xs font-semibold rounded-full border ${
+                        activity.feature === 'Immutable Records' ? 'bg-green-500/20 text-green-400 border-green-500/50' :
+                        activity.feature === 'Ecosystem Integration' ? 'bg-blue-500/20 text-blue-400 border-blue-500/50' :
+                        activity.feature === 'Instant Verification' ? 'bg-purple-500/20 text-purple-400 border-purple-500/50' :
+                        'bg-orange-500/20 text-orange-400 border-orange-500/50'
+                      }`}>
+                        {activity.feature}
+                      </span>
+                    ) : (
+                      <span className="text-sm text-gray-500">-</span>
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {activity.txHash ? (
